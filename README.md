@@ -160,29 +160,6 @@ Graphics should generally have the same color and size as the original
 Otherwise, levels may end up looking like a nightmare in design.  
 They may be thematically different as long as it doesn’t clash.
 
-## Documentation
-
-*LibreQuartz* always needs help with documentation, so please send your
-patches, but keep in mind:
-
-  1. We use [AsciiDoc](http://asciidoc.org/) for writing the
-     documentation.  
-     AsciiDoc is a simple plaintext-based format which is simple to 
-     read and write in its source form, and can generate nice HTML 
-     documents out of them.
-
-  2. Headers are formated in a wiki-style format, this makes it easier
-    for Vim (perhaps other editors, too) to automatically re-format
-    text.
-
-  3. Text is kept at 72 characters wide.  
-     In Vim, you can set the
-     editor to automatically insert line breaks as you’re typing by
-     performing `set textwidth=72`.  
-     Special exceptions to the width
-     rule might be allowed when necessary (for example, inserting long
-     URLs).
-
 ## Submitting your work
 
 The most common, and a fairly simple method, to submit your work is by
