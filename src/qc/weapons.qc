@@ -541,7 +541,6 @@ void() GrenadeTouch =
 		sound (self, CHAN_WEAPON, "weapons/bounce.wav", 1, ATTN_NORM);	// bounce sound
 	}
 	self.count = time + .02;
-	sound (self, CHAN_WEAPON, "weapons/bounce.wav", 1, ATTN_NORM);	// bounce sound
 	if (self.velocity == '0 0 0')
 		self.avelocity = '0 0 0';
 };
