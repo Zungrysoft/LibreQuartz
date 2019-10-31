@@ -448,7 +448,7 @@ void() bubble_bob =
 	self.cnt = self.cnt + 1;
 	if (self.cnt == 4)
 		bubble_split();
-	if (self.cnt == 20)
+	if (self.cnt >= 20)
 		remove(self);
 
 	rnd1 = self.velocity_x + (-10 + (random() * 20));

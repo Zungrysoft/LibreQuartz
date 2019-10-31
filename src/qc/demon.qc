@@ -328,7 +328,7 @@ void()	Demon_JumpTouch =
 	if (self.health <= 0)
 		return;
 		
-	if (other.takedamage) 
+	if (other.takedamage)
 	{
 		if ( vlen(self.velocity) > 400 )
 		{
