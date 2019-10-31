@@ -1,4 +1,5 @@
 void() W_SetCurrentAmmo;
+void() W_SetCurrentAmmo;
 /* ALL LIGHTS SHOULD BE 0 1 0 IN COLOR ALL OTHER ITEMS SHOULD
 BE .8 .3 .4 IN COLOR */
 
@@ -149,7 +150,6 @@ void() item_health =
 
 void() health_touch =
 {
-	local	float amount;
 	local	string	s;
 	
 	if (other.classname != "player")
@@ -868,9 +868,6 @@ KEYS
 
 void() key_touch =
 {
-local entity	stemp;
-local float		best;
-
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)
@@ -1004,8 +1001,6 @@ END OF LEVEL RUNES
 
 void() sigil_touch =
 {
-local entity	stemp;
-local float		best;
 
 	if (other.classname != "player")
 		return;
@@ -1077,9 +1072,6 @@ void() powerup_touch;
 
 void() powerup_touch =
 {
-local entity	stemp;
-local float		best;
-
 	if (other.classname != "player")
 		return;
 	if (other.health <= 0)

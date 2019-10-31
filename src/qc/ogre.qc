@@ -77,6 +77,11 @@ void() OgreGrenadeTouch =
 		OgreGrenadeExplode();
 		return;
 	}
+	//Fix for the Grenade + Elevator bug
+	if (self.count < time) {
+		sound (self, CHAN_WEAPON, "weapons/bounce.wav", 1, ATTN_NORM);	// bounce sound
+	}
+	self.count = time + .02;
 	sound (self, CHAN_VOICE, "weapons/bounce.wav", 1, ATTN_NORM);	// bounce sound
 	if (self.velocity == '0 0 0')
 		self.avelocity = '0 0 0';
@@ -89,7 +94,7 @@ OgreFireGrenade
 */
 void() OgreFireGrenade =
 {
-	local	entity missile, mpuff;
+	local	entity missile;
 	
 	self.effects = self.effects | EF_MUZZLEFLASH;
 
