@@ -324,32 +324,32 @@ void(float side)	Demon_Melee =
 void()	Demon_JumpTouch =
 {
 	local	float	ldmg;
-
+	
 	if (self.health <= 0)
 		return;
 		
-	if (other.takedamage)
+	if (other.takedamage) 
 	{
 		if ( vlen(self.velocity) > 400 )
 		{
-			ldmg = 40 + 10*random();
-			T_Damage (other, self, self, ldmg);	
+			//The fiend can't deal leap damage to the player immediately after already doing do.
+			//Solves some weird hit-detection issues where the fiend could insta-kill players or deal multiple hits at once.
+			if (self.count < time)
+			{
+				ldmg = 40 + 10*random();
+				T_Damage (other, self, self, ldmg);	
+			}
+			self.count = time + .3;
 		}
 	}
-
+	
 	if (!checkbottom(self))
 	{
 		if (self.flags & FL_ONGROUND)
-		{	// jump randomly to not get hung up
-//dprint ("popjump\n");
-	self.touch = SUB_Null;
-	self.think = demon1_jump1;
-	self.nextthink = time + 0.1;
-
-//			self.velocity_x = (random() - 0.5) * 600;
-//			self.velocity_y = (random() - 0.5) * 600;
-//			self.velocity_z = 200;
-//			self.flags = self.flags - FL_ONGROUND;
+		{
+			self.touch = SUB_Null;
+			self.think = demon1_jump1;
+			self.nextthink = time + 0.1;
 		}
 		return;	// not on ground yet
 	}
