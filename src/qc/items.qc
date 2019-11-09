@@ -1,5 +1,4 @@
 void() W_SetCurrentAmmo;
-void() W_SetCurrentAmmo;
 /* ALL LIGHTS SHOULD BE 0 1 0 IN COLOR ALL OTHER ITEMS SHOULD
 BE .8 .3 .4 IN COLOR */
 
@@ -184,10 +183,13 @@ void() health_touch =
 	// Megahealth = rot down the player's super health
 	if (self.healtype == 2)
 	{
-		other.items = other.items | IT_SUPERHEALTH;
-		self.nextthink = time + 5;
-		self.think = item_megahealth_rot;
-		self.owner = other;
+		//But don't rot if they are already rotting.
+		if (!(other.items & IT_SUPERHEALTH)) {
+			other.items = other.items | IT_SUPERHEALTH;
+			self.nextthink = time + 5;
+			self.think = item_megahealth_rot;
+			self.owner = other;
+		}
 	}
 	else
 	{
