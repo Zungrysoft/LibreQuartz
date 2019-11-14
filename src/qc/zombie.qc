@@ -360,9 +360,40 @@ sound (self, CHAN_VOICE, "zombie/z_idle.wav", 1, ATTN_IDLE);
 self.solid = SOLID_SLIDEBOX;
 if (!walkmove (0, 0))
 {
+	self.count = self.count + 1;
+	if (self.count > 15) {
+		//This is a fix for the bug where zombies sometimes will be stuck in their fallen state infinitely due to sloped geometry
+		//If they fail to revive 15 times, put them out of their misery
+		//Only works if no players are within a certain distance of it, so you can't just stand on top of the zombie to kill it
+		entity t = world;
+		float ret = TRUE;
+		while (1) {
+			//Go through each player
+			t = nextent(t);
+			if (t.classname != "player") {
+				break;
+			}
+			//Check to make sure the player isn't close by
+			if (t.origin_x - self.origin_x < 96 && t.origin_x - self.origin_x > -96) {
+				if (t.origin_y - self.origin_y < 96 && t.origin_y - self.origin_y > -96) {
+					if (t.origin_z - self.origin_z < 96 && t.origin_z - self.origin_z > -96) {
+						ret = FALSE;
+						break;
+					}
+				}
+			}
+		}
+		//If all players are a certain distance away, kill the zombie.
+		if (ret) {
+			self.count = 0;
+			T_Damage(self, self, self, 60);
+		}
+	}
 	self.think = zombie_paine11;
 	self.solid = SOLID_NOT;
 	return;
+} else {
+	self.count = 0;
 }
 };
 void() zombie_paine13	=[	$paine13,	zombie_paine14	] {};

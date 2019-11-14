@@ -524,7 +524,7 @@ void() weapon_nailgun =
 	precache_model ("progs/g_nail.mdl");
 	setmodel (self, "progs/g_nail.mdl");
 	self.weapon = IT_NAILGUN;
-	self.netname = "nailgun";
+	self.netname = "Nailgun";
 	self.touch = weapon_touch;
 	setsize (self, '-16 -16 0', '16 16 56');
 	StartItem ();
@@ -647,7 +647,9 @@ local float		best;
 
 	bound_other_ammo ();
 	
-	sprint (other, "You got the ");
+	sprint (other, "You got ");
+	sprint (other, ftos(self.aflag));
+	sprint (other, " ");
 	sprint (other, self.netname);
 	sprint (other, "\n");
 // ammo touch sound
@@ -1146,7 +1148,7 @@ void() item_artifact_invulnerability =
 	precache_sound ("items/protect3.wav");
 	self.noise = "items/protect.wav";
 	setmodel (self, "progs/invulner.mdl");
-	self.netname = "Pentagram of Protection";
+	self.netname = "Lucifer's Aegis";
 	self.items = IT_INVULNERABILITY;
 	setsize (self, '-16 -16 -24', '16 16 32');
 	StartItem ();
@@ -1164,7 +1166,7 @@ void() item_artifact_envirosuit =
 	precache_sound ("items/suit2.wav");
 	self.noise = "items/suit.wav";
 	setmodel (self, "progs/suit.mdl");
-	self.netname = "Biosuit";
+	self.netname = "Hazmat Suit";
 	self.items = IT_SUIT;
 	setsize (self, '-16 -16 -24', '16 16 32');
 	StartItem ();
@@ -1184,7 +1186,7 @@ void() item_artifact_invisibility =
 	precache_sound ("items/inv3.wav");
 	self.noise = "items/inv1.wav";
 	setmodel (self, "progs/invisibl.mdl");
-	self.netname = "Ring of Shadows";
+	self.netname = "Eye of Eryx";
 	self.items = IT_INVISIBILITY;
 	setsize (self, '-16 -16 -24', '16 16 32');
 	StartItem ();
@@ -1204,7 +1206,7 @@ void() item_artifact_super_damage =
 	precache_sound ("items/damage3.wav");
 	self.noise = "items/damage.wav";
 	setmodel (self, "progs/quaddama.mdl");
-	self.netname = "Quad Damage";
+	self.netname = "Crusher Sigil!";
 	self.items = IT_QUAD;
 	setsize (self, '-16 -16 -24', '16 16 32');
 	StartItem ();
@@ -1252,8 +1254,8 @@ void() BackpackTouch =
 // change weapons
 	other.ammo_shells = other.ammo_shells + self.ammo_shells;
 	other.ammo_nails = other.ammo_nails + self.ammo_nails;
-	other.ammo_rockets = other.ammo_rockets + self.ammo_rockets;
-	other.ammo_cells = other.ammo_cells + self.ammo_cells;
+	other.ammo_rockets = other.ammo_rockets + self.ammo_nails;
+	other.ammo_cells = other.ammo_cells + self.ammo_nails;
 
 	new = self.items;
 	if (!new)
@@ -1300,7 +1302,7 @@ void() BackpackTouch =
 		sprint (other, " cells");
 	}
 	
-	sprint (other, "\n");
+	sprint (other, "from a backpack\n");
 // backpack touch sound
 	sound (other, CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
