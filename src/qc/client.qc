@@ -981,7 +981,7 @@ void() CheckPowerups =
 		{
 			if (self.invisible_time == 1)
 			{
-				sprint (self, "Ring of Shadows magic is fading\n");
+				sprint (self, "The Eye of Eryx is fading away\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/inv2.wav", 1, ATTN_NORM);
 				self.invisible_time = time + 1;
@@ -1016,7 +1016,7 @@ void() CheckPowerups =
 		{
 			if (self.invincible_time == 1)
 			{
-				sprint (self, "Protection is almost burned out\n");
+				sprint (self, "Lucifer's Aegis is almost gone!\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/protect2.wav", 1, ATTN_NORM);
 				self.invincible_time = time + 1;
@@ -1051,7 +1051,7 @@ void() CheckPowerups =
 		{
 			if (self.super_time == 1)
 			{
-				sprint (self, "Quad Damage is wearing off\n");
+				sprint (self, "The Crusher Sigil's power dwindling\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/damage2.wav", 1, ATTN_NORM);
 				self.super_time = time + 1;
@@ -1086,7 +1086,7 @@ void() CheckPowerups =
 		{
 			if (self.rad_time == 1)
 			{
-				sprint (self, "Air supply in Biosuit expiring\n");
+				sprint (self, "Your Hazmat Suit is about to expire\n");
 				stuffcmd (self, "bf\n");
 				sound (self, CHAN_AUTO, "items/suit2.wav", 1, ATTN_NORM);
 				self.rad_time = time + 1;
@@ -1162,7 +1162,7 @@ called when a player connects to a server
 void() ClientConnect =
 {
 	bprint (self.netname);
-	bprint (" entered the game\n");
+	bprint (" joined the match\n");
 	
 // a client connecting during an intermission can cause problems
 	if (intermission_running)
@@ -1186,7 +1186,7 @@ void() ClientDisconnect =
 
 	// let everyone else know
 	bprint (self.netname);
-	bprint (" left the game with ");
+	bprint (" exited the match with ");
 	bprint (ftos(self.frags));
 	bprint (" frags\n");
 	sound (self, CHAN_BODY, "player/tornoff2.wav", 1, ATTN_NONE);
@@ -1221,7 +1221,7 @@ void(entity targ, entity attacker) ClientObituary =
 
 		if (attacker.classname == "teledeath2")
 		{
-			bprint ("Satan's power deflects ");
+			bprint ("Lucifer's influence deflects ");
 			bprint (targ.netname);
 			bprint ("'s telefrag\n");
 
@@ -1239,13 +1239,14 @@ void(entity targ, entity attacker) ClientObituary =
 				
 				if (targ.weapon == 64 && targ.waterlevel > 1)
 				{
-					bprint (" discharges into the water.\n");
+					bprint (" electrocuted himself\n");
 					return;
 				}
-				if (targ.weapon == IT_GRENADE_LAUNCHER)
-					bprint (" tries to put the pin back in\n");
-				else
-					bprint (" becomes bored with life\n");
+				if (targ.weapon == IT_GRENADE_LAUNCHER) {
+					bprint (" wasn't careful with explosives\n");
+				} else{
+					bprint (" blew himself up\n");
+				}
 				return;
 			}
 			else if ( (teamplay == 2) && (targ.team > 0)&&(targ.team == attacker.team) )
@@ -1270,56 +1271,64 @@ void(entity targ, entity attacker) ClientObituary =
 				rnum = attacker.weapon;
 				if (rnum == IT_AXE)
 				{
-					deathstring = " was ax-murdered by ";
+					deathstring = " was brutally beaten by ";
 					deathstring2 = "\n";
 				}
 				if (rnum == IT_SHOTGUN)
 				{
-					deathstring = " chewed on ";
-					deathstring2 = "'s boomstick\n";
+					deathstring = " sucked on ";
+					deathstring2 = "'s muffler\n";
 				}
 				if (rnum == IT_SUPER_SHOTGUN)
 				{
-					deathstring = " ate 2 loads of ";
-					deathstring2 = "'s buckshot\n";
+					if (random() < .03) {
+						deathstring = " was eliminated by ";
+					} else {
+						deathstring = " was ended by ";
+					}
+					deathstring2 = "'s shotgun\n";
 				}
 				if (rnum == IT_NAILGUN)
 				{
-					deathstring = " was nailed by ";
+					deathstring = " was pierced by ";
 					deathstring2 = "\n";
 				}
 				if (rnum == IT_SUPER_NAILGUN)
 				{
-					deathstring = " was punctured by ";
+					deathstring = " was gunned down by ";
 					deathstring2 = "\n";
 				}
 				if (rnum == IT_GRENADE_LAUNCHER)
 				{
-					deathstring = " eats ";
-					deathstring2 = "'s pineapple\n";
+					deathstring = " landed on ";
+					deathstring2 = "'s grenade\n";
 					if (targ.health < -40)
 					{
-						deathstring = " was gibbed by ";
+						deathstring = " was torn asunder by ";
 						deathstring2 = "'s grenade\n";
 					}
 				}
 				if (rnum == IT_ROCKET_LAUNCHER)
 				{
-					deathstring = " rides ";
+					deathstring = " was immolated by ";
 					deathstring2 = "'s rocket\n";
 					if (targ.health < -40)
 					{
-						deathstring = " was gibbed by ";
+						deathstring = " was blasted apart by ";
 						deathstring2 = "'s rocket\n" ;
 					}
 				}
 				if (rnum == IT_LIGHTNING)
 				{
-					deathstring = " accepts ";
-					if (attacker.waterlevel > 1)
-						deathstring2 = "'s discharge\n";
-					else
-						deathstring2 = "'s shaft\n";
+					if (attacker.waterlevel > 1) {
+						deathstring = " was electrocuted by ";
+					} else{
+						if (random() < .03) {
+							deathstring = " was given shock treatment by ";
+						}
+						deathstring = " was fried by ";
+					}
+					deathstring2 = "\n";
 				}
 				bprint (targ.netname);
 				bprint (deathstring);
@@ -1365,7 +1374,7 @@ void(entity targ, entity attacker) ClientObituary =
 				if (attacker.classname == "monster_wizard")
 					bprint (" was scragged by a Scrag\n");
 				if (attacker.classname == "monster_zombie")
-					bprint (" joins the Zombies\n");
+					bprint (" became a Zombie\n");
 
 				return;
 			}
@@ -1373,17 +1382,21 @@ void(entity targ, entity attacker) ClientObituary =
 			// tricks and traps
 			if (attacker.classname == "explo_box")
 			{
-				bprint (" blew up\n");
+				bprint (" exploded\n");
 				return;
 			}
 			if (attacker.solid == SOLID_BSP && attacker != world)
 			{	
-				bprint (" was squished\n");
+				bprint (" was crushed\n");
 				return;
 			}
 			if (attacker.classname == "trap_shooter" || attacker.classname == "trap_spikeshooter")
 			{
-				bprint (" was spiked\n");
+				if (attacker.spawnflags & 2) {
+					bprint (" was shot by a laser turret\n");
+				} else {
+					bprint (" was shot by a spike turret\n");
+				}
 				return;
 			}
 			if (attacker.classname == "fireball")
@@ -1401,31 +1414,31 @@ void(entity targ, entity attacker) ClientObituary =
 			rnum = targ.watertype;
 			if (rnum == -3)
 			{
-				if (random() < 0.5)
-					bprint (" sleeps with the fishes\n");
+				if (random() < 0.6)
+					bprint (" ran out of air\n");
 				else
-					bprint (" sucks it down\n");
+					bprint (" drowned\n");
 				return;
 			}
 			else if (rnum == -4)
 			{
 				if (random() < 0.5)
-					bprint (" gulped a load of slime\n");
+					bprint (" shouldn't have played with acid\n");
 				else
-					bprint (" can't exist on slime alone\n");
+					bprint (" was burned by the acid\n");
 				return;
 			}
 			else if (rnum == -5)
 			{
 				if (targ.health < -15)
 				{
-					bprint (" burst into flames\n");
+					bprint (" shouldn't have played with lava\n");
 					return;
 				}
 				if (random() < 0.5)
-					bprint (" turned into hot slag\n");
+					bprint (" fell into a volcano\n");
 				else
-					bprint (" visits the Volcano God\n");
+					bprint (" burst into flames\n");
 				return;
 			}
 
@@ -1433,7 +1446,7 @@ void(entity targ, entity attacker) ClientObituary =
 			if (targ.deathtype == "falling")
 			{
 				targ.deathtype = "";
-				bprint (" fell to his death\n");
+				bprint (" fell off a cliff\n");
 				return;
 			}
 
