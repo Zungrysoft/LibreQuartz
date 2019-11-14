@@ -361,9 +361,9 @@ self.solid = SOLID_SLIDEBOX;
 if (!walkmove (0, 0))
 {
 	self.count = self.count + 1;
-	if (self.count > 15) {
+	if (self.count > 10) {
 		//This is a fix for the bug where zombies sometimes will be stuck in their fallen state infinitely due to sloped geometry
-		//If they fail to revive 15 times, put them out of their misery
+		//If they fail to revive 10 times, put them out of their misery
 		//Only works if no players are within a certain distance of it, so you can't just stand on top of the zombie to kill it
 		entity t = world;
 		float ret = TRUE;

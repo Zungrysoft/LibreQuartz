@@ -1081,7 +1081,11 @@ void() powerup_touch =
 	if (other.health <= 0)
 		return;
 
-	sprint (other, "You got the ");
+	
+	sprint (other, "You got ");
+	if (self.classname != "item_artifact_invulnerability") {
+		sprint (other, "the ");
+	}
 	sprint (other, self.netname);
 	sprint (other,"\n");
 
@@ -1302,7 +1306,7 @@ void() BackpackTouch =
 		sprint (other, " cells");
 	}
 	
-	sprint (other, "from a backpack\n");
+	sprint (other, " from a backpack\n");
 // backpack touch sound
 	sound (other, CHAN_ITEM, "weapons/lock4.wav", 1, ATTN_NORM);
 	stuffcmd (other, "bf\n");
